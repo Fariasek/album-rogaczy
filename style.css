@@ -14,13 +14,13 @@ body {
 body {
     overflow: hidden;
     background:
-        radial-gradient(circle at 50% 35%, #3b2117 0%, #1a0d08 50%, #080302 100%);
+        radial-gradient(circle at 50% 38%, #2a1710 0%, #120805 58%, #050201 100%);
     font-family: "Cormorant Garamond", serif;
 }
 
 
 /* =====================================================
-   CAŁY EKRAN
+   SCENA
 ===================================================== */
 
 .album-stage {
@@ -31,38 +31,34 @@ body {
     align-items: center;
     justify-content: center;
 
-    padding: 28px;
+    padding: 34px;
 
     perspective: 2200px;
 
     background:
         radial-gradient(
             ellipse at center,
-            rgba(101, 48, 27, 0.22),
-            transparent 55%
-        ),
-        linear-gradient(
-            rgba(0, 0, 0, 0.05),
-            rgba(0, 0, 0, 0.35)
+            rgba(96, 47, 28, 0.18),
+            transparent 58%
         );
 }
 
 
 /* =====================================================
-   KSIĘGA
+   CAŁA KSIĘGA
 ===================================================== */
 
 .book {
     position: relative;
 
-    width: min(720px, 82vw);
-    aspect-ratio: 0.78;
+    width: min(500px, 72vw);
+    height: min(700px, 84vh);
 
     transform-style: preserve-3d;
 
     filter:
-        drop-shadow(0 35px 35px rgba(0, 0, 0, 0.75))
-        drop-shadow(0 8px 10px rgba(0, 0, 0, 0.65));
+        drop-shadow(0 30px 28px rgba(0, 0, 0, 0.72))
+        drop-shadow(0 8px 12px rgba(0, 0, 0, 0.62));
 }
 
 
@@ -75,91 +71,91 @@ body {
 
     position: absolute;
 
-    left: 17px;
-    right: -17px;
-    top: 15px;
-    bottom: -17px;
+    left: 18px;
+    right: -14px;
+    top: 14px;
+    bottom: -16px;
 
-    border-radius: 20px;
+    border-radius: 18px;
 
     background:
         repeating-linear-gradient(
             to bottom,
-            #c6a66e 0px,
-            #ead3a4 2px,
-            #bea06c 4px
+            #c6a26c 0px,
+            #e8cea0 2px,
+            #b8905e 4px
         );
 
-    border: 3px solid #7b522b;
+    border: 3px solid #6d4727;
 
     box-shadow:
-        12px 14px 20px rgba(0, 0, 0, 0.6);
+        11px 14px 18px rgba(0, 0, 0, 0.58);
 
-    z-index: -3;
+    z-index: -4;
 }
 
 
 /* =====================================================
-   GŁÓWNA OKŁADKA
+   OKŁADKA
 ===================================================== */
 
 .book-cover {
     position: absolute;
     inset: 0;
 
-    border-radius: 22px;
-
     overflow: hidden;
+
+    border-radius: 20px;
 
     cursor: pointer;
 
     background:
 
-        /* przetarcia skóry */
+        /* delikatne przetarcia */
         radial-gradient(
-            circle at 17% 14%,
-            rgba(255,255,255,0.035),
+            circle at 22% 12%,
+            rgba(255, 255, 255, 0.028),
             transparent 22%
         ),
 
         radial-gradient(
-            circle at 78% 72%,
-            rgba(0,0,0,0.25),
-            transparent 27%
+            circle at 78% 78%,
+            rgba(0, 0, 0, 0.18),
+            transparent 30%
         ),
 
-        /* delikatne linie skóry */
+        /* struktura skóry */
         repeating-linear-gradient(
-            16deg,
-            rgba(255,255,255,0.012) 0px,
-            rgba(255,255,255,0.012) 2px,
+            15deg,
+            rgba(255, 255, 255, 0.011) 0px,
+            rgba(255, 255, 255, 0.011) 2px,
             transparent 2px,
             transparent 8px
         ),
 
         linear-gradient(
             135deg,
-            #41291b 0%,
-            #2c180f 35%,
-            #1c0d09 72%,
-            #120705 100%
+            #352116 0%,
+            #27150e 38%,
+            #190c08 72%,
+            #100604 100%
         );
 
-    border: 12px solid #120805;
+    border: 11px solid #100604;
 
     box-shadow:
-        inset 0 0 80px rgba(0, 0, 0, 0.78),
-        inset 0 0 8px rgba(213, 164, 81, 0.22);
+        inset 0 0 75px rgba(0, 0, 0, 0.82),
+        inset 0 0 6px rgba(207, 156, 74, 0.2);
 
     transition:
-        transform 0.35s ease,
-        filter 0.35s ease;
+        transform 0.28s ease,
+        filter 0.28s ease;
 }
 
 .book-cover:hover {
-    transform: translateY(-4px) rotateX(1deg);
+    transform: translateY(-3px);
 
-    filter: brightness(1.04);
+    filter: brightness(1.03);
 }
 
 
@@ -170,27 +166,27 @@ body {
 .gold-frame {
     position: absolute;
 
-    inset: 27px;
+    inset: 22px;
 
-    border: 2px solid #b7833d;
+    border: 2px solid #a97536;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
     box-shadow:
-        inset 0 0 0 4px #211109,
-        inset 0 0 0 6px rgba(154, 103, 47, 0.58);
+        inset 0 0 0 3px #1c0e08,
+        inset 0 0 0 5px rgba(157, 103, 46, 0.52);
 }
 
 
 /* =====================================================
-   OZDOBNE NAROŻNIKI
+   NAROŻNIKI
 ===================================================== */
 
 .corner {
     position: absolute;
 
-    width: 105px;
-    height: 105px;
+    width: 92px;
+    height: 92px;
 
     z-index: 4;
 }
@@ -201,98 +197,91 @@ body {
 
     position: absolute;
 
-    background: linear-gradient(
-        #d8a558,
-        #966229,
-        #d1a252
-    );
+    background:
+        linear-gradient(
+            #e0b565,
+            #9a682d,
+            #c99543
+        );
 }
 
 .corner::before {
-    width: 88px;
-    height: 5px;
+    width: 76px;
+    height: 4px;
 }
 
 .corner::after {
-    width: 5px;
-    height: 88px;
+    width: 4px;
+    height: 76px;
 }
 
 .corner-tl {
-    top: 27px;
-    left: 27px;
-}
-
-.corner-tl::before,
-.corner-tl::after {
-    top: 0;
-    left: 0;
+    top: 22px;
+    left: 22px;
 }
 
 .corner-tr {
-    top: 27px;
-    right: 27px;
+    top: 22px;
+    right: 22px;
     transform: scaleX(-1);
 }
 
-.corner-tr::before,
-.corner-tr::after {
-    top: 0;
-    left: 0;
-}
-
 .corner-bl {
-    bottom: 27px;
-    left: 27px;
+    bottom: 22px;
+    left: 22px;
     transform: scaleY(-1);
 }
 
-.corner-bl::before,
-.corner-bl::after {
-    top: 0;
-    left: 0;
-}
-
 .corner-br {
-    bottom: 27px;
-    right: 27px;
+    bottom: 22px;
+    right: 22px;
     transform: scale(-1);
-}
-
-.corner-br::before,
-.corner-br::after {
-    top: 0;
-    left: 0;
 }
 
 
 /* =====================================================
-   BORDOWA WSTĘGA
+   KSIĘŻYC I GWIAZDY
 ===================================================== */
 
-.ribbon {
+.cover-moon {
     position: absolute;
 
-    top: 0;
-    right: 72px;
+    top: 48px;
+    right: 78px;
 
-    width: 42px;
-    height: 100%;
+    color: #d7ac5f;
 
-    background:
-        linear-gradient(
-            90deg,
-            #3b0e13,
-            #852432 45%,
-            #4a1017
-        );
+    font-size: 42px;
 
-    box-shadow:
-        0 0 14px rgba(0,0,0,0.75),
-        inset 5px 0 7px rgba(255,255,255,0.04),
-        inset -6px 0 8px rgba(0,0,0,0.32);
+    transform: rotate(-9deg);
 
-    opacity: 0.94;
+    text-shadow:
+        0 3px 7px rgba(0, 0, 0, 0.6);
+
+    z-index: 5;
+}
+
+.cover-stars {
+    position: absolute;
+
+    top: 88px;
+    right: 46px;
+
+    width: 90px;
+
+    color: #d7ac5f;
+
+    font-size: 19px;
+
+    line-height: 1.5;
+
+    letter-spacing: 5px;
+
+    transform: rotate(7deg);
+
+    opacity: 0.92;
+
+    z-index: 5;
 }
 
 
@@ -303,63 +292,63 @@ body {
 .cover-title {
     position: absolute;
 
-    top: 55px;
+    top: 45px;
     left: 50%;
 
-    transform: translateX(-50%) rotate(-1deg);
+    transform: translateX(-50%) rotate(-2deg);
 
-    width: 78%;
+    width: 76%;
 
     text-align: center;
 
-    color: #d9aa58;
+    color: #d7aa5a;
 
-    font-size: clamp(58px, 7vw, 91px);
+    font-size: clamp(48px, 5vw, 72px);
     font-weight: 700;
-    line-height: 0.82;
+    line-height: 0.84;
 
     text-shadow:
-        0 3px 0 #3d210f,
-        0 7px 12px rgba(0,0,0,0.7);
+        0 2px 0 #40230f,
+        0 5px 10px rgba(0, 0, 0, 0.68);
 
-    z-index: 5;
+    z-index: 6;
 }
 
 
 /* =====================================================
-   HERB
+   TARCZA / HERB
 ===================================================== */
 
 .crest-holder {
     position: absolute;
 
     left: 50%;
-    top: 205px;
+    top: 195px;
 
     transform: translateX(-50%);
 
-    width: 255px;
-    height: 255px;
+    width: 235px;
+    height: 235px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 26px;
+    border-radius: 18px;
 
     background:
         radial-gradient(
-            circle at 35% 28%,
-            #9b3640,
-            #6e1c27 58%,
-            #441016
+            circle at 38% 30%,
+            #93343e,
+            #681c27 56%,
+            #3f1015 100%
         );
 
-    border: 4px double #c18d42;
+    border: 4px double #b7803c;
 
     box-shadow:
-        inset 0 0 25px rgba(0,0,0,0.52),
-        0 13px 26px rgba(0,0,0,0.65);
+        inset 0 0 22px rgba(0, 0, 0, 0.54),
+        0 11px 23px rgba(0, 0, 0, 0.62);
 
     z-index: 7;
 }
@@ -371,60 +360,64 @@ body {
     object-fit: contain;
 
     filter:
-        drop-shadow(0 7px 5px rgba(0,0,0,0.55));
+        drop-shadow(0 6px 5px rgba(0, 0, 0, 0.52));
 }
 
 
 /* =====================================================
-   MOTTO
+   MOTTO NA WSTĘDZE
 ===================================================== */
 
 .motto {
     position: absolute;
 
     left: 50%;
-    top: 490px;
+    top: 428px;
 
     transform: translateX(-50%) rotate(-1deg);
 
-    width: 68%;
+    width: 70%;
 
     text-align: center;
 
-    color: #d4aa62;
+    color: #d2a65b;
 
     font-family: "Kalam", cursive;
-    font-size: 18px;
+    font-size: 16px;
 
-    z-index: 6;
+    z-index: 7;
 }
 
 
 /* =====================================================
-   WKLEJONE ZDJĘCIE
+   WKLEJONE ZDJĘCIE ZAMKU
 ===================================================== */
 
 .cover-photo {
     position: absolute;
 
-    left: 55px;
-    bottom: 50px;
+    left: 58px;
+    bottom: 62px;
 
-    width: 210px;
+    width: 245px;
 
     padding:
         8px
         8px
         28px;
 
-    background: #d9bf8d;
+    background:
+        linear-gradient(
+            #d9c08f,
+            #caaa73
+        );
 
-    transform: rotate(-5deg);
+    transform: rotate(-4deg);
 
     box-shadow:
-        0 10px 22px rgba(0,0,0,0.74);
+        0 10px 22px rgba(0, 0, 0, 0.7);
 
-    z-index: 8;
+    z-index: 9;
 }
 
 .cover-photo::before {
@@ -433,46 +426,73 @@ body {
     position: absolute;
 
     width: 72px;
-    height: 23px;
+    height: 22px;
 
-    top: -11px;
-    left: 66px;
+    top: -10px;
+    left: 78px;
 
     background:
-        rgba(190, 153, 91, 0.8);
+        rgba(194, 157, 91, 0.78);
 
     transform: rotate(-7deg);
+}
+
+.cover-photo::after {
+    content: "";
+
+    position: absolute;
+
+    width: 55px;
+    height: 20px;
+
+    right: -10px;
+    bottom: 12px;
+
+    background:
+        rgba(194, 157, 91, 0.72);
+
+    transform: rotate(13deg);
 }
 
 .cover-photo-image {
     width: 100%;
     aspect-ratio: 1.55;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 
     background:
         radial-gradient(
             circle at 50% 80%,
-            #27272f,
+            #26272f,
             #0e1014 74%
         );
 
-    color: #caa968;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    font-size: 48px;
+.cover-photo-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    filter:
+        sepia(0.45)
+        brightness(0.72)
+        contrast(1.08);
 }
 
 .cover-photo-caption {
-    margin-top: 6px;
+    margin-top: 5px;
 
     text-align: center;
 
-    color: #702630;
+    color: #742731;
 
     font-family: "Kalam", cursive;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 
@@ -483,11 +503,11 @@ body {
 .wax-seal {
     position: absolute;
 
-    right: 54px;
-    bottom: 54px;
+    right: 48px;
+    bottom: 56px;
 
-    width: 84px;
-    height: 84px;
+    width: 82px;
+    height: 82px;
 
     display: flex;
     align-items: center;
@@ -495,94 +515,173 @@ body {
 
     border-radius: 50%;
 
-    color: #d9aa5a;
+    color: #d8aa58;
 
-    font-size: 38px;
+    font-size: 37px;
 
     background:
         radial-gradient(
-            circle at 34% 26%,
-            #a83c46,
-            #711b25 60%,
-            #501117 100%
+            circle at 34% 28%,
+            #a53b45,
+            #701b25 60%,
+            #4b1016 100%
         );
 
-    border: 5px double #461016;
+    border: 5px double #431015;
 
     box-shadow:
-        0 7px 13px rgba(0,0,0,0.6),
-        inset 0 0 10px rgba(0,0,0,0.5);
+        0 7px 13px rgba(0, 0, 0, 0.58),
+        inset 0 0 10px rgba(0, 0, 0, 0.5);
 
     transform: rotate(-8deg);
-
-    z-index: 10;
-}
-
-
-/* =====================================================
-   NAPIS OTWÓRZ ALBUM
-===================================================== */
-
-.open-album {
-    position: absolute;
-
-    left: 50%;
-    bottom: 36px;
-
-    transform: translateX(-50%);
-
-    color: #d9af63;
-
-    font-family: "Kalam", cursive;
-    font-size: 16px;
-
-    letter-spacing: 1px;
-
-    opacity: 0.85;
 
     z-index: 12;
 }
 
 
 /* =====================================================
-   TELEFON / MNIEJSZY EKRAN
+   BORDOWA WSTĘGA Z BOKU
 ===================================================== */
 
-@media (max-width: 800px) {
+.ribbon {
+    position: absolute;
+
+    top: 0;
+    right: 12px;
+
+    width: 20px;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #3c0f14,
+            #7b2230,
+            #401016
+        );
+
+    box-shadow:
+        inset 4px 0 6px rgba(255,255,255,0.025),
+        inset -5px 0 7px rgba(0,0,0,0.35);
+
+    opacity: 0.82;
+
+    z-index: 3;
+}
+
+
+/* =====================================================
+   NAPIS "KLIKNIJ"
+===================================================== */
+
+.open-album {
+    position: absolute;
+
+    left: 50%;
+    bottom: 21px;
+
+    transform: translateX(-50%);
+
+    color: #d3a75b;
+
+    font-family: "Kalam", cursive;
+    font-size: 14px;
+
+    letter-spacing: 0.5px;
+
+    opacity: 0.8;
+
+    z-index: 15;
+}
+
+
+/* =====================================================
+   EKRANY NIŻSZE
+===================================================== */
+
+@media (max-height: 800px) {
+
+    .book {
+        height: 82vh;
+        width: auto;
+
+        aspect-ratio: 0.72;
+    }
+
+    .crest-holder {
+        top: 170px;
+
+        width: 205px;
+        height: 205px;
+    }
+
+    .motto {
+        top: 385px;
+    }
+
+    .cover-photo {
+        width: 205px;
+        bottom: 52px;
+    }
+
+    .wax-seal {
+        width: 70px;
+        height: 70px;
+
+        right: 38px;
+        bottom: 50px;
+    }
+}
+
+
+/* =====================================================
+   TELEFON
+===================================================== */
+
+@media (max-width: 700px) {
 
     .album-stage {
         padding: 14px;
     }
 
     .book {
-        width: min(560px, 92vw);
+        width: min(430px, 90vw);
+        height: min(620px, 86vh);
+    }
+
+    .cover-title {
+        top: 42px;
+
+        font-size: 48px;
     }
 
     .crest-holder {
+        top: 165px;
+
         width: 190px;
         height: 190px;
-        top: 180px;
     }
 
     .motto {
-        top: 405px;
+        top: 370px;
+
+        font-size: 13px;
     }
 
     .cover-photo {
-        width: 155px;
-        left: 35px;
-        bottom: 42px;
+        left: 32px;
+        bottom: 48px;
+
+        width: 165px;
     }
 
     .wax-seal {
-        width: 65px;
-        height: 65px;
-        right: 34px;
-        bottom: 42px;
-    }
+        right: 28px;
+        bottom: 46px;
 
-    .ribbon {
-        right: 52px;
-        width: 32px;
+        width: 62px;
+        height: 62px;
+
+        font-size: 28px;
     }
 }
