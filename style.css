@@ -1,687 +1,392 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Kalam:wght@400;700&display=swap');
 
-* {
-    box-sizing: border-box;
+:root{
+  --bg:#0a0402;
+  --brown:#24120b;
+  --brown2:#351c12;
+  --gold:#c99b4b;
+  --burgundy:#7b2130;
+  --paper:#d2ad74;
+  --ink:#332015;
 }
 
-html,
-body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 50% 45%, #321b12 0%, #160b07 52%, #070302 100%);
 }
 
-body {
-    overflow: hidden;
-    background:
-        radial-gradient(circle at 50% 38%, #2a1710 0%, #120805 58%, #050201 100%);
-    font-family: "Cormorant Garamond", serif;
+body{
+  min-height:100vh;
+  overflow:hidden;
+  font-family:"Kalam",cursive;
 }
 
-
-/* =====================================================
-   SCENA
-===================================================== */
-
-.album-stage {
-    width: 100vw;
-    height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 34px;
-
-    perspective: 2200px;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(96, 47, 28, 0.18),
-            transparent 58%
-        );
+.stage{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:18px 18px 66px;
+  position:relative;
 }
 
-
-/* =====================================================
-   CAŁA KSIĘGA
-===================================================== */
-
-.book {
-    position: relative;
-
-    width: min(500px, 72vw);
-    height: min(700px, 84vh);
-
-    transform-style: preserve-3d;
-
-    filter:
-        drop-shadow(0 30px 28px rgba(0, 0, 0, 0.72))
-        drop-shadow(0 8px 12px rgba(0, 0, 0, 0.62));
+.album{
+  width:min(95vw,1450px);
+  height:min(calc(100vh - 105px),850px);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:2200px;
 }
 
-
-/* =====================================================
-   GRUBOŚĆ KARTEK
-===================================================== */
-
-.book::before {
-    content: "";
-
-    position: absolute;
-
-    left: 18px;
-    right: -14px;
-    top: 14px;
-    bottom: -16px;
-
-    border-radius: 18px;
-
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            #c6a26c 0px,
-            #e8cea0 2px,
-            #b8905e 4px
-        );
-
-    border: 3px solid #6d4727;
-
-    box-shadow:
-        11px 14px 18px rgba(0, 0, 0, 0.58);
-
-    z-index: -4;
+/* Każdy ekran zajmuje dokładnie tę samą przestrzeń */
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  visibility:hidden;
+  transform:translateX(45px) rotateY(-3deg) scale(.985);
+  transition:
+    opacity .38s ease,
+    transform .55s cubic-bezier(.22,.75,.22,1),
+    visibility .38s;
 }
 
+.screen.active{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(0) rotateY(0) scale(1);
+  z-index:10;
+}
+
+.screen.leaving-left{
+  opacity:0;
+  transform:translateX(-55px) rotateY(3deg) scale(.98);
+}
 
 /* =====================================================
    OKŁADKA
 ===================================================== */
 
-.book-cover {
-    position: absolute;
-    inset: 0;
-
-    overflow: hidden;
-
-    border-radius: 20px;
-
-    cursor: pointer;
-
-    background:
-
-        /* delikatne przetarcia */
-        radial-gradient(
-            circle at 22% 12%,
-            rgba(255, 255, 255, 0.028),
-            transparent 22%
-        ),
-
-        radial-gradient(
-            circle at 78% 78%,
-            rgba(0, 0, 0, 0.18),
-            transparent 30%
-        ),
-
-        /* struktura skóry */
-        repeating-linear-gradient(
-            15deg,
-            rgba(255, 255, 255, 0.011) 0px,
-            rgba(255, 255, 255, 0.011) 2px,
-            transparent 2px,
-            transparent 8px
-        ),
-
-        linear-gradient(
-            135deg,
-            #352116 0%,
-            #27150e 38%,
-            #190c08 72%,
-            #100604 100%
-        );
-
-    border: 11px solid #100604;
-
-    box-shadow:
-        inset 0 0 75px rgba(0, 0, 0, 0.82),
-        inset 0 0 6px rgba(207, 156, 74, 0.2);
-
-    transition:
-        transform 0.28s ease,
-        filter 0.28s ease;
+.cover-screen{
+  align-items:center;
+  justify-content:center;
 }
 
-.book-cover:hover {
-    transform: translateY(-3px);
-
-    filter: brightness(1.03);
+.cover-button{
+  position:relative;
+  height:96%;
+  width:auto;
+  aspect-ratio:520/889;
+  padding:0;
+  border:0;
+  background:none;
+  cursor:pointer;
+  filter:
+    drop-shadow(0 30px 30px rgba(0,0,0,.72))
+    drop-shadow(0 8px 10px rgba(0,0,0,.62));
+  transition:transform .25s ease,filter .25s ease;
 }
 
+.cover-button:hover{
+  transform:translateY(-4px) rotate(-.25deg);
+  filter:
+    drop-shadow(0 35px 35px rgba(0,0,0,.78))
+    brightness(1.035);
+}
+
+.cover-button img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:8px;
+}
+
+.open-label{
+  position:absolute;
+  left:50%;
+  bottom:2.5%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  color:#e1ba70;
+  font-size:clamp(12px,1.1vw,17px);
+  text-shadow:0 2px 5px #000;
+}
 
 /* =====================================================
-   ZŁOTA RAMA
+   POZNAJ NAS
 ===================================================== */
 
-.gold-frame {
-    position: absolute;
-
-    inset: 22px;
-
-    border: 2px solid #a97536;
-
-    border-radius: 8px;
-
-    box-shadow:
-        inset 0 0 0 3px #1c0e08,
-        inset 0 0 0 5px rgba(157, 103, 46, 0.52);
+.book-frame{
+  position:relative;
+  width:min(96%,1420px);
+  aspect-ratio:16/9;
+  max-height:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border:10px solid #160b07;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 30px 65px rgba(0,0,0,.72);
+  background:#2b160e;
 }
 
+.intro-page{
+  position:relative;
+  overflow:hidden;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 19% 14%,rgba(255,244,211,.3),transparent 27%),
+    radial-gradient(circle at 80% 84%,rgba(73,38,18,.13),transparent 35%),
+    repeating-linear-gradient(7deg,rgba(70,39,18,.025) 0 1px,transparent 1px 6px),
+    linear-gradient(100deg,#c59d67,#dfc08a 48%,#c49c68);
+  box-shadow:inset 0 0 50px rgba(75,42,19,.38);
+}
+
+.left-page{border-right:1px solid rgba(77,42,20,.55)}
+.right-page{border-left:1px solid rgba(255,255,255,.15)}
+
+.left-page:after,.right-page:before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;
+  width:44px;
+  pointer-events:none;
+}
+.left-page:after{right:0;background:linear-gradient(to left,rgba(54,28,14,.28),transparent)}
+.right-page:before{left:0;background:linear-gradient(to right,rgba(54,28,14,.25),transparent)}
+
+.left-page h1{
+  margin:0;
+  position:absolute;
+  top:8%;
+  left:0;
+  right:0;
+  text-align:center;
+  font-family:"Cormorant Garamond",serif;
+  color:#7a2631;
+  font-size:clamp(48px,5vw,84px);
+  line-height:.8;
+  transform:rotate(-2deg);
+}
+
+.right-page h2{
+  position:absolute;
+  top:5%;
+  left:0;right:0;
+  margin:0;
+  text-align:center;
+  color:#792832;
+  font-size:clamp(32px,3vw,55px);
+  transform:rotate(1deg);
+}
+
+.corner-mark{
+  position:absolute;
+  top:4%;
+  right:8%;
+  color:#8b4a4f;
+  font-size:28px;
+}
+
+.torn-note{
+  position:absolute;
+  background:#d6b47c;
+  padding:18px 22px;
+  box-shadow:0 8px 15px rgba(64,34,16,.28);
+  clip-path:polygon(1% 5%,8% 1%,17% 4%,28% 0,39% 4%,50% 1%,62% 5%,74% 0,86% 4%,99% 1%,97% 96%,86% 100%,74% 96%,62% 100%,50% 96%,38% 100%,26% 96%,13% 100%,1% 95%);
+}
+
+.intro-note{
+  top:34%;
+  left:15%;
+  width:70%;
+  font-size:clamp(15px,1.45vw,23px);
+  line-height:1.45;
+  transform:rotate(-2deg);
+}
+
+.names{
+  position:absolute;
+  inset:19% 7% 26%;
+}
+
+.names span{
+  position:absolute;
+  color:#3b2417;
+  font-size:clamp(13px,1.35vw,22px);
+  white-space:nowrap;
+  text-shadow:0 1px rgba(255,255,255,.22);
+}
+
+.n1{left:5%;top:2%;transform:rotate(-7deg)}
+.n2{left:42%;top:8%;transform:rotate(4deg)}
+.n3{left:63%;top:26%;transform:rotate(-6deg)}
+.n4{left:10%;top:28%;transform:rotate(5deg)}
+.n5{left:39%;top:43%;transform:rotate(-3deg)}
+.n6{left:70%;top:54%;transform:rotate(6deg)}
+.n7{left:6%;top:61%;transform:rotate(-5deg)}
+.n8{left:35%;top:72%;transform:rotate(4deg)}
+.n9{left:68%;top:77%;transform:rotate(-4deg)}
+
+.clue{
+  left:11%;
+  bottom:5%;
+  width:62%;
+  font-size:clamp(11px,1.05vw,17px);
+  transform:rotate(1.5deg);
+}
+
+.wax{
+  position:absolute;
+  right:8%;
+  bottom:6%;
+  width:78px;
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:5px double #4c1017;
+  background:radial-gradient(circle at 35% 28%,#a63b45,#6f1b24 60%,#490f15);
+  color:#d9ab59;
+  font-family:Georgia,serif;
+  font-size:36px;
+  box-shadow:0 7px 12px rgba(0,0,0,.42),inset 0 0 10px rgba(0,0,0,.4);
+  transform:rotate(-8deg);
+}
+
+.deer{
+  position:absolute;
+  left:9%;
+  bottom:8%;
+  font-size:42px;
+  filter:sepia(1);
+}
+
+.ink{
+  position:absolute;
+  width:60px;height:38px;
+  background:#211612;
+  border-radius:45% 55% 48% 52%;
+  opacity:.85;
+}
+.ink:before,.ink:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  background:#211612;
+}
+.ink:before{width:8px;height:8px;left:-14px;top:4px;box-shadow:70px 15px 0 -1px #211612}
+.ink:after{width:5px;height:5px;left:22px;top:-14px;box-shadow:-25px 45px 0 1px #211612}
+.ink1{left:8%;top:19%;transform:scale(.6) rotate(-12deg)}
+.ink2{right:8%;top:14%;transform:scale(.5) rotate(12deg)}
+
+.paperclip{
+  position:absolute;
+  right:6%;
+  top:8%;
+  color:#64411f;
+  font-size:62px;
+  transform:rotate(18deg);
+}
 
 /* =====================================================
-   NAROŻNIKI
+   GOTOWE ROZKŁADÓWKI 1:1
 ===================================================== */
 
-.corner {
-    position: absolute;
-
-    width: 92px;
-    height: 92px;
-
-    z-index: 4;
+.spread-screen{
+  padding:0;
 }
 
-.corner::before,
-.corner::after {
-    content: "";
-
-    position: absolute;
-
-    background:
-        linear-gradient(
-            #e0b565,
-            #9a682d,
-            #c99543
-        );
+.spread-image-wrap{
+  width:min(98%,1500px);
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.corner::before {
-    width: 76px;
-    height: 4px;
+.spread-image{
+  display:block;
+  max-width:100%;
+  max-height:100%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:12px;
+  box-shadow:0 30px 70px rgba(0,0,0,.75);
 }
-
-.corner::after {
-    width: 4px;
-    height: 76px;
-}
-
-.corner-tl {
-    top: 22px;
-    left: 22px;
-}
-
-.corner-tr {
-    top: 22px;
-    right: 22px;
-    transform: scaleX(-1);
-}
-
-.corner-bl {
-    bottom: 22px;
-    left: 22px;
-    transform: scaleY(-1);
-}
-
-.corner-br {
-    bottom: 22px;
-    right: 22px;
-    transform: scale(-1);
-}
-
 
 /* =====================================================
-   KSIĘŻYC I GWIAZDY
+   NAWIGACJA
 ===================================================== */
 
-.cover-moon {
-    position: absolute;
-
-    top: 48px;
-    right: 78px;
-
-    color: #d7ac5f;
-
-    font-size: 42px;
-
-    transform: rotate(-9deg);
-
-    text-shadow:
-        0 3px 7px rgba(0, 0, 0, 0.6);
-
-    z-index: 5;
+.controls{
+  position:absolute;
+  bottom:13px;
+  left:50%;
+  transform:translateX(-50%);
+  height:43px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  z-index:50;
 }
 
-.cover-stars {
-    position: absolute;
-
-    top: 88px;
-    right: 46px;
-
-    width: 90px;
-
-    color: #d7ac5f;
-
-    font-size: 19px;
-
-    line-height: 1.5;
-
-    letter-spacing: 5px;
-
-    transform: rotate(7deg);
-
-    opacity: 0.92;
-
-    z-index: 5;
+.controls button,
+#pageTitle{
+  height:43px;
+  border:1px solid #9b682f;
+  background:rgba(24,10,6,.96);
+  color:#dfba70;
+  font-family:"Kalam",cursive;
 }
 
+.controls button{
+  width:58px;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.controls button:hover:not(:disabled){
+  background:#3a1712;
+}
+
+.controls button:disabled{
+  opacity:.28;
+  cursor:default;
+}
+
+#pageTitle{
+  min-width:220px;
+  display:grid;
+  place-items:center;
+  padding:0 20px;
+  font-size:15px;
+}
 
 /* =====================================================
-   TYTUŁ
+   MNIEJSZY EKRAN
 ===================================================== */
 
-.cover-title {
-    position: absolute;
-
-    top: 45px;
-    left: 50%;
-
-    transform: translateX(-50%) rotate(-2deg);
-
-    width: 76%;
-
-    text-align: center;
-
-    color: #d7aa5a;
-
-    font-size: clamp(48px, 5vw, 72px);
-    font-weight: 700;
-    line-height: 0.84;
-
-    text-shadow:
-        0 2px 0 #40230f,
-        0 5px 10px rgba(0, 0, 0, 0.68);
-
-    z-index: 6;
-}
-
-
-/* =====================================================
-   TARCZA / HERB
-===================================================== */
-
-.crest-holder {
-    position: absolute;
-
-    left: 50%;
-    top: 195px;
-
-    transform: translateX(-50%);
-
-    width: 235px;
-    height: 235px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 18px;
-
-    background:
-        radial-gradient(
-            circle at 38% 30%,
-            #93343e,
-            #681c27 56%,
-            #3f1015 100%
-        );
-
-    border: 4px double #b7803c;
-
-    box-shadow:
-        inset 0 0 22px rgba(0, 0, 0, 0.54),
-        0 11px 23px rgba(0, 0, 0, 0.62);
-
-    z-index: 7;
-}
-
-.crest-holder img {
-    width: 94%;
-    height: 94%;
-
-    object-fit: contain;
-
-    filter:
-        drop-shadow(0 6px 5px rgba(0, 0, 0, 0.52));
-}
-
-
-/* =====================================================
-   MOTTO NA WSTĘDZE
-===================================================== */
-
-.motto {
-    position: absolute;
-
-    left: 50%;
-    top: 428px;
-
-    transform: translateX(-50%) rotate(-1deg);
-
-    width: 70%;
-
-    text-align: center;
-
-    color: #d2a65b;
-
-    font-family: "Kalam", cursive;
-    font-size: 16px;
-
-    z-index: 7;
-}
-
-
-/* =====================================================
-   WKLEJONE ZDJĘCIE ZAMKU
-===================================================== */
-
-.cover-photo {
-    position: absolute;
-
-    left: 58px;
-    bottom: 62px;
-
-    width: 245px;
-
-    padding:
-        8px
-        8px
-        28px;
-
-    background:
-        linear-gradient(
-            #d9c08f,
-            #caaa73
-        );
-
-    transform: rotate(-4deg);
-
-    box-shadow:
-        0 10px 22px rgba(0, 0, 0, 0.7);
-
-    z-index: 9;
-}
-
-.cover-photo::before {
-    content: "";
-
-    position: absolute;
-
-    width: 72px;
-    height: 22px;
-
-    top: -10px;
-    left: 78px;
-
-    background:
-        rgba(194, 157, 91, 0.78);
-
-    transform: rotate(-7deg);
-}
-
-.cover-photo::after {
-    content: "";
-
-    position: absolute;
-
-    width: 55px;
-    height: 20px;
-
-    right: -10px;
-    bottom: 12px;
-
-    background:
-        rgba(194, 157, 91, 0.72);
-
-    transform: rotate(13deg);
-}
-
-.cover-photo-image {
-    width: 100%;
-    aspect-ratio: 1.55;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at 50% 80%,
-            #26272f,
-            #0e1014 74%
-        );
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cover-photo-image img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    filter:
-        sepia(0.45)
-        brightness(0.72)
-        contrast(1.08);
-}
-
-.cover-photo-caption {
-    margin-top: 5px;
-
-    text-align: center;
-
-    color: #742731;
-
-    font-family: "Kalam", cursive;
-    font-size: 12px;
-}
-
-
-/* =====================================================
-   PIECZĘĆ
-===================================================== */
-
-.wax-seal {
-    position: absolute;
-
-    right: 48px;
-    bottom: 56px;
-
-    width: 82px;
-    height: 82px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    color: #d8aa58;
-
-    font-size: 37px;
-
-    background:
-        radial-gradient(
-            circle at 34% 28%,
-            #a53b45,
-            #701b25 60%,
-            #4b1016 100%
-        );
-
-    border: 5px double #431015;
-
-    box-shadow:
-        0 7px 13px rgba(0, 0, 0, 0.58),
-        inset 0 0 10px rgba(0, 0, 0, 0.5);
-
-    transform: rotate(-8deg);
-
-    z-index: 12;
-}
-
-
-/* =====================================================
-   BORDOWA WSTĘGA Z BOKU
-===================================================== */
-
-.ribbon {
-    position: absolute;
-
-    top: 0;
-    right: 12px;
-
-    width: 20px;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #3c0f14,
-            #7b2230,
-            #401016
-        );
-
-    box-shadow:
-        inset 4px 0 6px rgba(255,255,255,0.025),
-        inset -5px 0 7px rgba(0,0,0,0.35);
-
-    opacity: 0.82;
-
-    z-index: 3;
-}
-
-
-/* =====================================================
-   NAPIS "KLIKNIJ"
-===================================================== */
-
-.open-album {
-    position: absolute;
-
-    left: 50%;
-    bottom: 21px;
-
-    transform: translateX(-50%);
-
-    color: #d3a75b;
-
-    font-family: "Kalam", cursive;
-    font-size: 14px;
-
-    letter-spacing: 0.5px;
-
-    opacity: 0.8;
-
-    z-index: 15;
-}
-
-
-/* =====================================================
-   EKRANY NIŻSZE
-===================================================== */
-
-@media (max-height: 800px) {
-
-    .book {
-        height: 82vh;
-        width: auto;
-
-        aspect-ratio: 0.72;
-    }
-
-    .crest-holder {
-        top: 170px;
-
-        width: 205px;
-        height: 205px;
-    }
-
-    .motto {
-        top: 385px;
-    }
-
-    .cover-photo {
-        width: 205px;
-        bottom: 52px;
-    }
-
-    .wax-seal {
-        width: 70px;
-        height: 70px;
-
-        right: 38px;
-        bottom: 50px;
-    }
-}
-
-
-/* =====================================================
-   TELEFON
-===================================================== */
-
-@media (max-width: 700px) {
-
-    .album-stage {
-        padding: 14px;
-    }
-
-    .book {
-        width: min(430px, 90vw);
-        height: min(620px, 86vh);
-    }
-
-    .cover-title {
-        top: 42px;
-
-        font-size: 48px;
-    }
-
-    .crest-holder {
-        top: 165px;
-
-        width: 190px;
-        height: 190px;
-    }
-
-    .motto {
-        top: 370px;
-
-        font-size: 13px;
-    }
-
-    .cover-photo {
-        left: 32px;
-        bottom: 48px;
-
-        width: 165px;
-    }
-
-    .wax-seal {
-        right: 28px;
-        bottom: 46px;
-
-        width: 62px;
-        height: 62px;
-
-        font-size: 28px;
-    }
+@media(max-width:800px){
+  .stage{padding:8px 6px 62px}
+  .album{width:98vw;height:calc(100vh - 78px)}
+  .book-frame{width:100%}
+  .names span{font-size:10px}
+  .intro-note{font-size:11px;padding:11px}
+  .clue{font-size:8px;padding:9px}
+  .wax{width:48px;font-size:23px}
+  #pageTitle{min-width:150px}
 }
