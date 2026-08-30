@@ -3,37 +3,44 @@
 ========================================================= */
 
 
-/*
-    KOLEJNOŚĆ ROZKŁADÓWEK
-
-    Bez imion na stronie.
-    Nazwy są tylko tutaj technicznie.
-*/
+/* =========================================================
+   KOLEJNOŚĆ STRON
+========================================================= */
 
 const pages = [
 
-    "./images/poznaj-nas.png",
+    // 1 — Poznaj nas
+    "images/poznajnas.png",
 
-    "./images/jez.png",
+    // 2 — Jeż
+    "images/jez.png",
 
-    "./images/alex.png",
+    // 3 — Alex
+    "images/alex.png",
 
-    "./images/camila.png",
+    // 4 — Camila
+    "images/camila.png",
 
-    "./images/bella.png",
+    // 5 — Bella
+    "images/bella.png",
 
-    "./images/ros.png",
+    // 6 — Rosanna
+    "images/ros.png",
 
-    "./images/alishia.png",
+    // 7 — Alishia
+    "images/alishia.png",
 
-    "./images/OKŁADKATYLNE.PNG"
+    // 8 — Katrina
+    "images/katrina.png",
+
+    // 9 — tylna okładka
+    "images/OKŁADKATYLNE.PNG"
 
 ];
 
 
-
 /* =========================================================
-   ELEMENTY
+   ELEMENTY STRONY
 ========================================================= */
 
 const coverScreen =
@@ -45,7 +52,6 @@ const albumScreen =
 const openAlbum =
     document.getElementById("openAlbum");
 
-
 const book =
     document.getElementById("book");
 
@@ -54,7 +60,6 @@ const pageImage =
 
 const turnSheet =
     document.getElementById("turnSheet");
-
 
 const prevBtn =
     document.getElementById("prevBtn");
@@ -66,9 +71,8 @@ const pageCounter =
     document.getElementById("pageCounter");
 
 
-
 /* =========================================================
-   STAN
+   USTAWIENIA
 ========================================================= */
 
 let currentPage = 0;
@@ -76,30 +80,8 @@ let currentPage = 0;
 let isAnimating = false;
 
 
-
 /* =========================================================
-   LICZNIK
-========================================================= */
-
-function updateNavigation() {
-
-    pageCounter.textContent =
-        `${currentPage + 1} / ${pages.length}`;
-
-
-    prevBtn.disabled =
-        currentPage === 0;
-
-
-    nextBtn.disabled =
-        currentPage === pages.length - 1;
-
-}
-
-
-
-/* =========================================================
-   WCZYTYWANIE OBRAZÓW WCZEŚNIEJ
+   WCZYTANIE WSZYSTKICH GRAFIK
 ========================================================= */
 
 function preloadImages() {
@@ -114,9 +96,25 @@ function preloadImages() {
 
 }
 
-
 preloadImages();
 
+
+/* =========================================================
+   AKTUALIZACJA LICZNIKA I PRZYCISKÓW
+========================================================= */
+
+function updateNavigation() {
+
+    pageCounter.textContent =
+        `${currentPage + 1} / ${pages.length}`;
+
+    prevBtn.disabled =
+        currentPage === 0;
+
+    nextBtn.disabled =
+        currentPage === pages.length - 1;
+
+}
 
 
 /* =========================================================
@@ -125,28 +123,23 @@ preloadImages();
 
 function showAlbum() {
 
-    if (isAnimating)
+    if (isAnimating) {
         return;
-
+    }
 
     isAnimating = true;
 
-
-    coverScreen.classList.add(
-        "opening"
-    );
+    coverScreen.classList.add("opening");
 
 
     /*
-        Album zaczyna pojawiać się
-        jeszcze podczas otwierania okładki.
+        W trakcie otwierania okładki
+        pokazujemy środek albumu.
     */
 
     setTimeout(() => {
 
-        albumScreen.classList.add(
-            "active"
-        );
+        albumScreen.classList.add("active");
 
     }, 300);
 
@@ -158,13 +151,10 @@ function showAlbum() {
             "opening"
         );
 
-
         pageImage.src =
             pages[currentPage];
 
-
         updateNavigation();
-
 
         isAnimating = false;
 
@@ -173,44 +163,39 @@ function showAlbum() {
 }
 
 
-
 /* =========================================================
    NASTĘPNA STRONA
 ========================================================= */
 
 function nextPage() {
 
-    if (isAnimating)
+    if (isAnimating) {
         return;
+    }
 
-
-    if (
-        currentPage >=
-        pages.length - 1
-    )
+    if (currentPage >= pages.length - 1) {
         return;
-
+    }
 
     isAnimating = true;
-
 
     const nextIndex =
         currentPage + 1;
 
 
-    /*
-        rozpoczynamy efekt
-    */
+    /* uruchamiamy animację */
 
-    book.classList.add(
-        "switching"
-    );
-
+    book.classList.add("switching");
 
     turnSheet.classList.remove(
         "turn-prev"
     );
 
+
+    /*
+        Reset animacji CSS,
+        żeby działała przy każdym kliknięciu.
+    */
 
     void turnSheet.offsetWidth;
 
@@ -221,8 +206,8 @@ function nextPage() {
 
 
     /*
-        Zmieniamy grafikę w chwili,
-        gdy kartka jest prawie bokiem.
+        W połowie przewracania
+        podmieniamy obraz.
     */
 
     setTimeout(() => {
@@ -230,10 +215,8 @@ function nextPage() {
         currentPage =
             nextIndex;
 
-
         pageImage.src =
             pages[currentPage];
-
 
         updateNavigation();
 
@@ -241,7 +224,7 @@ function nextPage() {
 
 
     /*
-        koniec animacji
+        Koniec animacji.
     */
 
     setTimeout(() => {
@@ -250,11 +233,9 @@ function nextPage() {
             "turn-next"
         );
 
-
         book.classList.remove(
             "switching"
         );
-
 
         isAnimating = false;
 
@@ -263,40 +244,33 @@ function nextPage() {
 }
 
 
-
 /* =========================================================
    POPRZEDNIA STRONA
 ========================================================= */
 
 function previousPage() {
 
-    if (isAnimating)
+    if (isAnimating) {
         return;
+    }
 
-
-    if (currentPage <= 0)
+    if (currentPage <= 0) {
         return;
-
+    }
 
     isAnimating = true;
-
 
     const previousIndex =
         currentPage - 1;
 
 
-    book.classList.add(
-        "switching"
-    );
-
+    book.classList.add("switching");
 
     turnSheet.classList.remove(
         "turn-next"
     );
 
-
     void turnSheet.offsetWidth;
-
 
     turnSheet.classList.add(
         "turn-prev"
@@ -308,10 +282,8 @@ function previousPage() {
         currentPage =
             previousIndex;
 
-
         pageImage.src =
             pages[currentPage];
-
 
         updateNavigation();
 
@@ -324,18 +296,15 @@ function previousPage() {
             "turn-prev"
         );
 
-
         book.classList.remove(
             "switching"
         );
-
 
         isAnimating = false;
 
     }, 750);
 
 }
-
 
 
 /* =========================================================
@@ -360,38 +329,34 @@ prevBtn.addEventListener(
 );
 
 
-
 /* =========================================================
-   KLAWIATURA
+   STRZAŁKI NA KLAWIATURZE
 ========================================================= */
 
 document.addEventListener(
     "keydown",
     function(event) {
 
+        /*
+            Klawiatura działa dopiero
+            po otworzeniu albumu.
+        */
 
         if (
-            !albumScreen.classList.contains(
-                "active"
-            )
-        )
-            return;
-
-
-        if (
-            event.key ===
-            "ArrowRight"
+            !albumScreen.classList.contains("active")
         ) {
+            return;
+        }
+
+
+        if (event.key === "ArrowRight") {
 
             nextPage();
 
         }
 
 
-        if (
-            event.key ===
-            "ArrowLeft"
-        ) {
+        if (event.key === "ArrowLeft") {
 
             previousPage();
 
@@ -401,13 +366,11 @@ document.addEventListener(
 );
 
 
-
 /* =========================================================
    START
 ========================================================= */
 
 pageImage.src =
     pages[0];
-
 
 updateNavigation();
