@@ -3,185 +3,70 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Album Rogaczy</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-  <main class="stage">
+  <main class="album-stage">
 
     <div class="album" id="album">
 
-      <!-- ==================================================
+
+      <!-- =====================================================
            OKŁADKA
-      =================================================== -->
+      ====================================================== -->
 
       <section
-        class="screen active cover-screen"
+        class="album-view active"
         data-title="Okładka"
       >
 
         <button
-          class="cover-button"
+          class="cover"
           id="openAlbum"
-          aria-label="Otwórz album"
+          type="button"
+          aria-label="Otwórz Album Rogaczy"
         >
 
           <img
             src="images/okladka.jpg"
-            alt="Album Rogaczy"
+            alt="Okładka Albumu Rogaczy"
           >
-
-          <span class="open-label">
-            ✦ kliknij, aby otworzyć ✦
-          </span>
 
         </button>
 
       </section>
 
 
-      <!-- ==================================================
+
+      <!-- =====================================================
            POZNAJ NAS
-      =================================================== -->
+
+           To będzie nowa pełna grafika 1:1,
+           a nie strona składana z CSS.
+      ====================================================== -->
 
       <section
-        class="screen intro-screen"
+        class="album-view"
         data-title="Poznaj nas"
       >
 
-        <div class="book-frame intro-book">
+        <div class="spread">
 
-
-          <!-- LEWA STRONA -->
-
-          <div class="intro-page left-page">
-
-            <div class="corner-mark">
-              ☾ ✦
-            </div>
-
-            <h1>
-              Poznaj<br>
-              nas ♥
-            </h1>
-
-
-            <div class="torn-note intro-note">
-
-              Rogacze to coś więcej niż dom —
-              to rodzina, przyjaźń, śmiech,
-              wsparcie i niezapomniane chwile.
-
-              <br><br>
-
-              Przekartkuj album i poznaj nas
-              trochę lepiej. ♡
-
-            </div>
-
-
-            <div class="wax">
-              R
-            </div>
-
-
-            <div class="ink ink1"></div>
-
-
-            <div class="deer">
-              🦌
-            </div>
-
-          </div>
-
-
-          <!-- PRAWA STRONA -->
-
-          <div class="intro-page right-page">
-
-            <h2>
-              Hej! Tu Rogacze ♥
-            </h2>
-
-
-            <!--
-            ==================================================
-            IMIONA
-
-            Tutaj możesz później sama zmieniać,
-            dodawać albo usuwać osoby.
-
-            Nie ma podpisów kto jest uczniem,
-            stażystą ani opiekunem.
-            ==================================================
-            -->
-
-            <div class="names">
-
-              <span class="n1">
-                Katrina Felix
-              </span>
-
-              <span class="n2">
-                Villemo Kristofdotter
-              </span>
-
-              <span class="n3">
-                Camila Smape
-              </span>
-
-              <span class="n4">
-                Alex L. Morozova Nixon
-              </span>
-
-              <span class="n5">
-                Bella Grande-Anderson
-              </span>
-
-              <span class="n6">
-                Mike Farias
-              </span>
-
-              <span class="n7">
-                Rosanna Meris Riddle
-              </span>
-
-              <span class="n8">
-                Jezz Morgan Mazurtšak
-              </span>
-
-              <span class="n9">
-                Alishia Farias
-              </span>
-
-            </div>
-
-
-            <div class="torn-note clue">
-
-              Kolejne rozkładówki nie mają podpisów.
-
-              <br>
-
-              Spróbujcie odgadnąć na czacie,
-              do kogo należą. ♥
-
-            </div>
-
-
-            <div class="ink ink2"></div>
-
-
-            <div class="paperclip">
-              ⌇
-            </div>
-
-          </div>
+          <img
+            src="images/poznaj-nas.png"
+            alt="Poznaj nas — Album Rogaczy"
+          >
 
         </div>
 
@@ -189,22 +74,20 @@
 
 
 
-      <!-- ==================================================
-           ROZKŁADÓWKA 1 — JEŻ
-           
-           Bez imienia.
-           Uczniowie mają zgadywać.
-      =================================================== -->
+      <!-- =====================================================
+           JEŻ
+
+           ZOSTAWIAMY DOTYCHCZASOWĄ GRAFIKĘ
+      ====================================================== -->
 
       <section
-        class="screen spread-screen"
+        class="album-view"
         data-title="???"
       >
 
-        <div class="spread-image-wrap">
+        <div class="spread">
 
           <img
-            class="spread-image"
             src="images/jez.png"
             alt="Anonimowa rozkładówka Albumu Rogaczy"
           >
@@ -215,21 +98,20 @@
 
 
 
-      <!-- ==================================================
-           ROZKŁADÓWKA 2 — ALEX
-           
-           Również bez imienia.
-      =================================================== -->
+      <!-- =====================================================
+           ALEX
+
+           ZOSTAWIAMY DOTYCHCZASOWĄ GRAFIKĘ
+      ====================================================== -->
 
       <section
-        class="screen spread-screen"
+        class="album-view"
         data-title="???"
       >
 
-        <div class="spread-image-wrap">
+        <div class="spread">
 
           <img
-            class="spread-image"
             src="images/alex.png"
             alt="Anonimowa rozkładówka Albumu Rogaczy"
           >
@@ -239,39 +121,65 @@
       </section>
 
 
-      <!-- ==================================================
-           KOLEJNE OSOBY BĘDZIEMY DODAWAĆ TUTAJ
-      =================================================== -->
+
+      <!-- =====================================================
+           TU BĘDZIEMY DODAWAĆ KOLEJNE OSOBY
+      ====================================================== -->
 
 
     </div>
 
 
 
-    <!-- ==================================================
+    <!-- =====================================================
+         EFEKT PRZEWRACANEJ KARTKI
+
+         Ten element będzie animowany w script.js
+    ====================================================== -->
+
+    <div
+      class="page-turn"
+      id="pageTurn"
+      aria-hidden="true"
+    >
+
+      <div class="page-turn-front"></div>
+
+      <div class="page-turn-back"></div>
+
+    </div>
+
+
+
+    <!-- =====================================================
          NAWIGACJA
-    =================================================== -->
+    ====================================================== -->
 
     <nav
-      class="controls"
-      id="controls"
+      class="album-controls"
+      id="albumControls"
     >
 
       <button
-        id="prev"
+        id="prevPage"
+        type="button"
         aria-label="Poprzednia strona"
       >
         ←
       </button>
 
 
-      <div id="pageTitle">
+      <div
+        class="page-name"
+        id="pageName"
+      >
         Okładka
       </div>
 
 
       <button
-        id="next"
+        id="nextPage"
+        type="button"
         aria-label="Następna strona"
       >
         →
@@ -284,6 +192,10 @@
 
 
   <script src="script.js"></script>
+
+</body>
+
+</html>
 
 </body>
 
