@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Album Rogaczy</title>
 
@@ -15,109 +14,111 @@
 
 <body>
 
-<main class="album-stage">
+    <main class="album-stage">
 
-    <!-- =========================================
-         OKŁADKA
-    ========================================== -->
+        <!-- =========================
+             OKŁADKA PRZEDNIA
+        ========================== -->
 
-    <section class="cover-screen active" id="coverScreen">
+        <section class="cover-screen active" id="coverScreen">
 
-        <button
-            class="cover-button"
-            id="openAlbum"
-            type="button"
-            aria-label="Otwórz Album Rogaczy"
-        >
-
-            <img
-                src="./images/okladka.jpg"
-                alt="Album Rogaczy"
+            <button
+                class="cover-button"
+                id="openAlbum"
+                type="button"
+                aria-label="Otwórz Album Rogaczy"
             >
 
-        </button>
-
-    </section>
-
-
-    <!-- =========================================
-         OTWARTY ALBUM
-    ========================================== -->
-
-    <section class="album-screen" id="albumScreen">
-
-        <div class="book-shell">
-
-            <div class="book" id="book">
-
-                <!-- aktualna rozkładówka -->
-
                 <img
-                    id="pageImage"
-                    class="page-image"
-                    src="./images/poznaj-nas.png"
+                    src="images/okladka.jpg"
                     alt="Album Rogaczy"
                 >
 
+            </button>
 
-                <!-- animowana kartka -->
+        </section>
 
-                <div
-                    class="turn-sheet"
-                    id="turnSheet"
-                    aria-hidden="true"
-                >
 
-                    <div class="turn-shadow"></div>
+        <!-- =========================
+             ŚRODEK ALBUMU
+        ========================== -->
+
+        <section class="album-screen" id="albumScreen">
+
+            <div class="book-shell">
+
+                <div class="book" id="book">
+
+                    <!--
+                        Tutaj JavaScript będzie
+                        podmieniał kolejne grafiki.
+                    -->
+
+                    <img
+                        id="pageImage"
+                        class="page-image"
+                        src="images/poznajnas.png"
+                        alt="Rozkładówka Albumu Rogaczy"
+                    >
+
+
+                    <!-- EFEKT PRZEWRACANIA KARTKI -->
+
+                    <div
+                        class="turn-sheet"
+                        id="turnSheet"
+                        aria-hidden="true"
+                    >
+                        <div class="turn-shadow"></div>
+                    </div>
+
+
+                    <!-- ŚRODEK / GRZBIET ALBUMU -->
+
+                    <div class="spine"></div>
 
                 </div>
 
-
-                <!-- grzbiet książki -->
-
-                <div class="spine"></div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================
-             NAWIGACJA
-        ====================================== -->
-
-        <nav class="navigation">
-
-            <button
-                id="prevBtn"
-                type="button"
-                aria-label="Poprzednia karta"
-            >
-                ←
-            </button>
-
-
-            <div id="pageCounter">
-                1 / 8
             </div>
 
 
-            <button
-                id="nextBtn"
-                type="button"
-                aria-label="Następna karta"
-            >
-                →
-            </button>
+            <!-- =========================
+                 PRZYCISKI
+            ========================== -->
 
-        </nav>
+            <nav class="navigation">
 
-    </section>
+                <button
+                    id="prevBtn"
+                    type="button"
+                    aria-label="Poprzednia strona"
+                >
+                    ←
+                </button>
 
-</main>
+
+                <div id="pageCounter">
+                    1 / 9
+                </div>
 
 
-<script src="script.js"></script>
+                <button
+                    id="nextBtn"
+                    type="button"
+                    aria-label="Następna strona"
+                >
+                    →
+                </button>
+
+            </nav>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>
