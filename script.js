@@ -1,8 +1,14 @@
 /* =========================================================
    ALBUM ROGACZY
-   PRAWDZIWE PRZEWRACANIE GRAFIK
 ========================================================= */
 
+
+/*
+    KOLEJNOŚĆ ROZKŁADÓWEK
+
+    Bez imion na stronie.
+    Nazwy są tylko tutaj technicznie.
+*/
 
 const pages = [
 
@@ -10,7 +16,17 @@ const pages = [
 
     "./images/jez.png",
 
-    "./images/alex.png"
+    "./images/alex.png",
+
+    "./images/camila.png",
+
+    "./images/bella.png",
+
+    "./images/ros.png",
+
+    "./images/alishia.png",
+
+    "./images/OKŁADKATYLNE.PNG"
 
 ];
 
@@ -20,11 +36,11 @@ const pages = [
    ELEMENTY
 ========================================================= */
 
-const coverView =
-    document.getElementById("coverView");
+const coverScreen =
+    document.getElementById("coverScreen");
 
-const bookView =
-    document.getElementById("bookView");
+const albumScreen =
+    document.getElementById("albumScreen");
 
 const openAlbum =
     document.getElementById("openAlbum");
@@ -33,58 +49,31 @@ const openAlbum =
 const book =
     document.getElementById("book");
 
+const pageImage =
+    document.getElementById("pageImage");
 
-const currentSpread =
-    document.getElementById("currentSpread");
-
-const underSpread =
-    document.getElementById("underSpread");
-
-
-const fixedHalf =
-    document.getElementById("fixedHalf");
+const turnSheet =
+    document.getElementById("turnSheet");
 
 
-const flipPage =
-    document.getElementById("flipPage");
+const prevBtn =
+    document.getElementById("prevBtn");
 
-const flipFront =
-    document.getElementById("flipFront");
+const nextBtn =
+    document.getElementById("nextBtn");
 
-const flipBack =
-    document.getElementById("flipBack");
-
-
-const prevButton =
-    document.getElementById("prevPage");
-
-const nextButton =
-    document.getElementById("nextPage");
-
-const counter =
-    document.getElementById("counter");
+const pageCounter =
+    document.getElementById("pageCounter");
 
 
 
 /* =========================================================
-   ZMIENNE
+   STAN
 ========================================================= */
 
-let currentIndex = 0;
+let currentPage = 0;
 
-let isTurning = false;
-
-
-
-/* =========================================================
-   POMOCNICZA FUNKCJA URL
-========================================================= */
-
-function imageURL(src) {
-
-    return `url("${src}")`;
-
-}
+let isAnimating = false;
 
 
 
@@ -92,283 +81,258 @@ function imageURL(src) {
    LICZNIK
 ========================================================= */
 
-function updateControls() {
+function updateNavigation() {
 
-    prevButton.disabled =
-        currentIndex === 0;
-
-
-    nextButton.disabled =
-        currentIndex ===
-        pages.length - 1;
+    pageCounter.textContent =
+        `${currentPage + 1} / ${pages.length}`;
 
 
-    counter.textContent =
-        `${currentIndex + 1} / ${pages.length}`;
+    prevBtn.disabled =
+        currentPage === 0;
+
+
+    nextBtn.disabled =
+        currentPage === pages.length - 1;
 
 }
 
 
 
 /* =========================================================
-   OTWIERANIE OKŁADKI
+   WCZYTYWANIE OBRAZÓW WCZEŚNIEJ
 ========================================================= */
 
-function openBook() {
+function preloadImages() {
 
-    coverView.classList.add(
+    pages.forEach((src) => {
+
+        const img = new Image();
+
+        img.src = src;
+
+    });
+
+}
+
+
+preloadImages();
+
+
+
+/* =========================================================
+   OTWARCIE ALBUMU
+========================================================= */
+
+function showAlbum() {
+
+    if (isAnimating)
+        return;
+
+
+    isAnimating = true;
+
+
+    coverScreen.classList.add(
         "opening"
     );
 
 
     /*
-        Pod spodem od razu przygotowujemy
-        "Poznaj nas".
+        Album zaczyna pojawiać się
+        jeszcze podczas otwierania okładki.
     */
-
-    currentSpread.src =
-        pages[0];
-
 
     setTimeout(() => {
 
-        bookView.classList.add(
+        albumScreen.classList.add(
             "active"
         );
 
-    }, 350);
+    }, 300);
 
 
     setTimeout(() => {
 
-        coverView.classList.remove(
+        coverScreen.classList.remove(
             "active",
             "opening"
         );
 
 
-        currentIndex = 0;
+        pageImage.src =
+            pages[currentPage];
 
-        updateControls();
 
-    }, 1050);
+        updateNavigation();
+
+
+        isAnimating = false;
+
+    }, 920);
 
 }
 
 
 
 /* =========================================================
-   PRZEWRÓĆ DO PRZODU
+   NASTĘPNA STRONA
 ========================================================= */
 
 function nextPage() {
 
-    if (isTurning)
+    if (isAnimating)
         return;
 
 
     if (
-        currentIndex >=
+        currentPage >=
         pages.length - 1
     )
         return;
 
 
-    isTurning = true;
+    isAnimating = true;
 
 
-    const current =
-        pages[currentIndex];
-
-
-    const next =
-        pages[currentIndex + 1];
+    const nextIndex =
+        currentPage + 1;
 
 
     /*
-        POD SPODem =
-        następna pełna rozkładówka
+        rozpoczynamy efekt
     */
-
-    underSpread.src =
-        next;
-
-
-    /*
-        LEWA POŁOWA OBECNEJ
-        zostaje nieruchoma
-    */
-
-    fixedHalf.style.backgroundImage =
-        imageURL(current);
-
-
-    /*
-        PRZÓD obracanej strony =
-        prawa połowa obecnej
-    */
-
-    flipFront.style.backgroundImage =
-        imageURL(current);
-
-
-    /*
-        TYŁ obracanej strony =
-        lewa połowa następnej
-    */
-
-    flipBack.style.backgroundImage =
-        imageURL(next);
-
-
-
-    book.classList.remove(
-        "turning-prev"
-    );
-
 
     book.classList.add(
-        "turning",
-        "turning-next"
+        "switching"
     );
 
 
+    turnSheet.classList.remove(
+        "turn-prev"
+    );
+
+
+    void turnSheet.offsetWidth;
+
+
+    turnSheet.classList.add(
+        "turn-next"
+    );
+
 
     /*
-        Po zakończeniu animacji
-        pokazujemy już pełną
-        nową rozkładówkę.
+        Zmieniamy grafikę w chwili,
+        gdy kartka jest prawie bokiem.
     */
 
     setTimeout(() => {
 
-        currentIndex++;
+        currentPage =
+            nextIndex;
 
 
-        currentSpread.src =
-            pages[currentIndex];
+        pageImage.src =
+            pages[currentPage];
 
 
-        underSpread.src =
-            "";
+        updateNavigation();
+
+    }, 340);
 
 
-        book.classList.remove(
-            "turning",
-            "turning-next"
+    /*
+        koniec animacji
+    */
+
+    setTimeout(() => {
+
+        turnSheet.classList.remove(
+            "turn-next"
         );
 
 
-        updateControls();
+        book.classList.remove(
+            "switching"
+        );
 
 
-        isTurning = false;
+        isAnimating = false;
 
-    }, 1120);
+    }, 750);
 
 }
 
 
 
 /* =========================================================
-   PRZEWRÓĆ DO TYŁU
+   POPRZEDNIA STRONA
 ========================================================= */
 
 function previousPage() {
 
-    if (isTurning)
+    if (isAnimating)
         return;
 
 
-    if (currentIndex <= 0)
+    if (currentPage <= 0)
         return;
 
 
-    isTurning = true;
+    isAnimating = true;
 
 
-    const current =
-        pages[currentIndex];
-
-
-    const previous =
-        pages[currentIndex - 1];
-
-
-    /*
-        POPRZEDNIA pełna rozkładówka
-        jest pod spodem.
-    */
-
-    underSpread.src =
-        previous;
-
-
-    /*
-        PRAWA połowa obecnej
-        pozostaje nieruchoma.
-    */
-
-    fixedHalf.style.backgroundImage =
-        imageURL(current);
-
-
-    /*
-        PRZÓD =
-        lewa połowa obecnej
-    */
-
-    flipFront.style.backgroundImage =
-        imageURL(current);
-
-
-    /*
-        TYŁ =
-        prawa połowa poprzedniej
-    */
-
-    flipBack.style.backgroundImage =
-        imageURL(previous);
-
-
-
-    book.classList.remove(
-        "turning-next"
-    );
+    const previousIndex =
+        currentPage - 1;
 
 
     book.classList.add(
-        "turning",
-        "turning-prev"
+        "switching"
     );
 
+
+    turnSheet.classList.remove(
+        "turn-next"
+    );
+
+
+    void turnSheet.offsetWidth;
+
+
+    turnSheet.classList.add(
+        "turn-prev"
+    );
 
 
     setTimeout(() => {
 
-        currentIndex--;
+        currentPage =
+            previousIndex;
 
 
-        currentSpread.src =
-            pages[currentIndex];
+        pageImage.src =
+            pages[currentPage];
 
 
-        underSpread.src =
-            "";
+        updateNavigation();
+
+    }, 340);
 
 
-        book.classList.remove(
-            "turning",
-            "turning-prev"
+    setTimeout(() => {
+
+        turnSheet.classList.remove(
+            "turn-prev"
         );
 
 
-        updateControls();
+        book.classList.remove(
+            "switching"
+        );
 
 
-        isTurning = false;
+        isAnimating = false;
 
-    }, 1120);
+    }, 750);
 
 }
 
@@ -380,17 +344,17 @@ function previousPage() {
 
 openAlbum.addEventListener(
     "click",
-    openBook
+    showAlbum
 );
 
 
-nextButton.addEventListener(
+nextBtn.addEventListener(
     "click",
     nextPage
 );
 
 
-prevButton.addEventListener(
+prevBtn.addEventListener(
     "click",
     previousPage
 );
@@ -407,7 +371,7 @@ document.addEventListener(
 
 
         if (
-            !bookView.classList.contains(
+            !albumScreen.classList.contains(
                 "active"
             )
         )
@@ -433,7 +397,6 @@ document.addEventListener(
 
         }
 
-
     }
 );
 
@@ -443,8 +406,8 @@ document.addEventListener(
    START
 ========================================================= */
 
-currentSpread.src =
+pageImage.src =
     pages[0];
 
 
-updateControls();
+updateNavigation();
