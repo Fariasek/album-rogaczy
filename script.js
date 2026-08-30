@@ -1,64 +1,236 @@
-const screens = [...document.querySelectorAll('.screen')];
-const prev = document.getElementById('prev');
-const next = document.getElementById('next');
-const title = document.getElementById('pageTitle');
-const openAlbum = document.getElementById('openAlbum');
+const views = [...document.querySelectorAll(".album-view")];
 
-let current = 0;
+const prevButton = document.getElementById("prevPage");
+const nextButton = document.getElementById("nextPage");
+const pageName = document.getElementById("pageName");
+const openAlbumButton = document.getElementById("openAlbum");
 
-function showPage(newIndex, direction = 1) {
-  if (newIndex < 0 || newIndex >= screens.length || newIndex === current) return;
+const pageTurn = document.getElementById("pageTurn");
 
-  const old = screens[current];
-  old.classList.remove('active');
+let currentPage = 0;
+let isTurning = false;
 
-  if (direction > 0) {
-    old.classList.add('leaving-left');
-  }
 
-  setTimeout(() => {
-    old.classList.remove('leaving-left');
-  }, 560);
+/* =========================================================
+   AKTUALIZACJA NAWIGACJI
+========================================================= */
 
-  current = newIndex;
-  screens[current].classList.add('active');
+function updateNavigation() {
 
-  updateControls();
+    prevButton.disabled = currentPage === 0;
+    nextButton.disabled = currentPage === views.length - 1;
+
+    const title = views[currentPage].dataset.title || "";
+
+    if (currentPage >= 2) {
+        pageName.textContent = `Karta ${currentPage - 1} — ???`;
+    } else {
+        pageName.textContent = title;
+    }
+
 }
 
-function updateControls() {
-  prev.disabled = current === 0;
-  next.disabled = current === screens.length - 1;
 
-  const visibleTitle = screens[current].dataset.title || '';
+/* =========================================================
+   ZMIANA WIDOKU
+========================================================= */
 
-  if (current >= 2) {
-    title.textContent = `Karta ${current - 1} — ???`;
-  } else {
-    title.textContent = visibleTitle;
-  }
+function activatePage(index) {
+
+    views.forEach((view) => {
+        view.classList.remove("active");
+    });
+
+    views[index].classList.add("active");
+
+    currentPage = index;
+
+    updateNavigation();
+
 }
 
-openAlbum.addEventListener('click', () => {
-  showPage(1, 1);
+
+/* =========================================================
+   ANIMACJA DO PRZODU
+========================================================= */
+
+function turnNext() {
+
+    if (isTurning) return;
+
+    if (currentPage >= views.length - 1) return;
+
+    isTurning = true;
+
+    const nextIndex = currentPage + 1;
+
+    pageTurn.classList.remove("turn-prev");
+    pageTurn.classList.remove("turn-next");
+
+    /*
+       Najpierw pokazujemy następną stronę pod przewracaną kartką.
+    */
+
+    views[nextIndex].classList.add("active");
+
+    /*
+       Wymuszamy przeliczenie stylu,
+       żeby animacja zawsze odpaliła od początku.
+    */
+
+    void pageTurn.offsetWidth;
+
+    pageTurn.classList.add("turn-next");
+
+
+    /*
+       W połowie animacji chowamy starą stronę.
+    */
+
+    setTimeout(() => {
+
+        views[currentPage].classList.remove("active");
+
+    }, 470);
+
+
+    /*
+       Po zakończeniu animacji ustawiamy nową stronę
+       jako aktualną.
+    */
+
+    setTimeout(() => {
+
+        currentPage = nextIndex;
+
+        pageTurn.classList.remove("turn-next");
+
+        updateNavigation();
+
+        isTurning = false;
+
+    }, 980);
+
+}
+
+
+/* =========================================================
+   ANIMACJA DO TYŁU
+========================================================= */
+
+function turnPrev() {
+
+    if (isTurning) return;
+
+    if (currentPage <= 0) return;
+
+    isTurning = true;
+
+    const previousIndex = currentPage - 1;
+
+    pageTurn.classList.remove("turn-next");
+    pageTurn.classList.remove("turn-prev");
+
+
+    /*
+       Poprzednia strona pojawia się pod kartką.
+    */
+
+    views[previousIndex].classList.add("active");
+
+
+    void pageTurn.offsetWidth;
+
+    pageTurn.classList.add("turn-prev");
+
+
+    /*
+       W połowie przewracania chowamy obecną stronę.
+    */
+
+    setTimeout(() => {
+
+        views[currentPage].classList.remove("active");
+
+    }, 470);
+
+
+    /*
+       Kończymy animację.
+    */
+
+    setTimeout(() => {
+
+        currentPage = previousIndex;
+
+        pageTurn.classList.remove("turn-prev");
+
+        updateNavigation();
+
+        isTurning = false;
+
+    }, 980);
+
+}
+
+
+/* =========================================================
+   OTWARCIE OKŁADKI
+========================================================= */
+
+function openAlbum() {
+
+    if (currentPage !== 0) return;
+
+    turnNext();
+
+}
+
+
+/* =========================================================
+   PRZYCISKI
+========================================================= */
+
+nextButton.addEventListener("click", () => {
+
+    turnNext();
+
 });
 
-prev.addEventListener('click', () => {
-  showPage(current - 1, -1);
+
+prevButton.addEventListener("click", () => {
+
+    turnPrev();
+
 });
 
-next.addEventListener('click', () => {
-  showPage(current + 1, 1);
+
+openAlbumButton.addEventListener("click", () => {
+
+    openAlbum();
+
 });
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowRight') {
-    showPage(current + 1, 1);
-  }
 
-  if (event.key === 'ArrowLeft') {
-    showPage(current - 1, -1);
-  }
+/* =========================================================
+   KLAWIATURA
+========================================================= */
+
+document.addEventListener("keydown", (event) => {
+
+    if (event.key === "ArrowRight") {
+        turnNext();
+    }
+
+    if (event.key === "ArrowLeft") {
+        turnPrev();
+    }
+
 });
 
-updateControls();
+
+/* =========================================================
+   START
+========================================================= */
+
+activatePage(0);
