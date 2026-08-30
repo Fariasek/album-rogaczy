@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
 
@@ -14,20 +13,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
 
 <main class="album-stage">
 
-
-    <!-- =====================================================
+    <!-- =========================================
          OKŁADKA
-    ====================================================== -->
+    ========================================== -->
 
-    <section
-        class="cover-view active"
-        id="coverView"
-    >
+    <section class="cover-screen active" id="coverScreen">
 
         <button
             class="cover-button"
@@ -46,141 +40,79 @@
     </section>
 
 
-
-    <!-- =====================================================
+    <!-- =========================================
          OTWARTY ALBUM
-    ====================================================== -->
+    ========================================== -->
 
-    <section
-        class="book-view"
-        id="bookView"
-    >
+    <section class="album-screen" id="albumScreen">
 
-        <div
-            class="book"
-            id="book"
-        >
+        <div class="book-shell">
 
+            <div class="book" id="book">
 
-            <!--
-            ================================================
-            AKTUALNA ROZKŁADÓWKA
-            ================================================
-            -->
+                <!-- aktualna rozkładówka -->
 
-            <img
-                id="currentSpread"
-                class="current-spread"
-                src="./images/poznaj-nas.png"
-                alt="Rozkładówka Albumu Rogaczy"
-            >
+                <img
+                    id="pageImage"
+                    class="page-image"
+                    src="./images/poznaj-nas.png"
+                    alt="Album Rogaczy"
+                >
 
 
-
-            <!--
-            ================================================
-            NASTĘPNA / POPRZEDNIA ROZKŁADÓWKA POD SPODem
-            ================================================
-            -->
-
-            <img
-                id="underSpread"
-                class="under-spread"
-                src=""
-                alt=""
-            >
-
-
-
-            <!--
-            ================================================
-            NIERUCHOMA POŁOWA AKTUALNEJ STRONY
-
-            Przy przejściu do przodu:
-            zostaje lewa połowa aktualnej rozkładówki.
-
-            Przy cofaniu:
-            zostaje prawa połowa aktualnej rozkładówki.
-            ================================================
-            -->
-
-            <div
-                class="fixed-half"
-                id="fixedHalf"
-            ></div>
-
-
-
-            <!--
-            ================================================
-            PRZEWRACANA KARTKA
-            ================================================
-            -->
-
-            <div
-                class="flip-page"
-                id="flipPage"
-            >
+                <!-- animowana kartka -->
 
                 <div
-                    class="flip-face flip-front"
-                    id="flipFront"
-                ></div>
+                    class="turn-sheet"
+                    id="turnSheet"
+                    aria-hidden="true"
+                >
+
+                    <div class="turn-shadow"></div>
+
+                </div>
 
 
-                <div
-                    class="flip-face flip-back"
-                    id="flipBack"
-                ></div>
+                <!-- grzbiet książki -->
+
+                <div class="spine"></div>
 
             </div>
-
-
-
-            <!-- cień grzbietu -->
-
-            <div class="book-spine"></div>
-
 
         </div>
 
 
-
-        <!-- =================================================
+        <!-- =====================================
              NAWIGACJA
-        ================================================== -->
+        ====================================== -->
 
-        <nav class="controls">
-
+        <nav class="navigation">
 
             <button
-                id="prevPage"
+                id="prevBtn"
                 type="button"
-                aria-label="Poprzednia strona"
+                aria-label="Poprzednia karta"
             >
                 ←
             </button>
 
 
-            <div id="counter">
-                1 / 3
+            <div id="pageCounter">
+                1 / 8
             </div>
 
 
             <button
-                id="nextPage"
+                id="nextBtn"
                 type="button"
-                aria-label="Następna strona"
+                aria-label="Następna karta"
             >
                 →
             </button>
 
-
         </nav>
 
-
     </section>
-
 
 </main>
 
@@ -188,5 +120,4 @@
 <script src="script.js"></script>
 
 </body>
-
 </html>
