@@ -1,236 +1,450 @@
-const views = [...document.querySelectorAll(".album-view")];
+/* =========================================================
+   ALBUM ROGACZY
+   PRAWDZIWE PRZEWRACANIE GRAFIK
+========================================================= */
 
-const prevButton = document.getElementById("prevPage");
-const nextButton = document.getElementById("nextPage");
-const pageName = document.getElementById("pageName");
-const openAlbumButton = document.getElementById("openAlbum");
 
-const pageTurn = document.getElementById("pageTurn");
+const pages = [
 
-let currentPage = 0;
+    "./images/poznaj-nas.png",
+
+    "./images/jez.png",
+
+    "./images/alex.png"
+
+];
+
+
+
+/* =========================================================
+   ELEMENTY
+========================================================= */
+
+const coverView =
+    document.getElementById("coverView");
+
+const bookView =
+    document.getElementById("bookView");
+
+const openAlbum =
+    document.getElementById("openAlbum");
+
+
+const book =
+    document.getElementById("book");
+
+
+const currentSpread =
+    document.getElementById("currentSpread");
+
+const underSpread =
+    document.getElementById("underSpread");
+
+
+const fixedHalf =
+    document.getElementById("fixedHalf");
+
+
+const flipPage =
+    document.getElementById("flipPage");
+
+const flipFront =
+    document.getElementById("flipFront");
+
+const flipBack =
+    document.getElementById("flipBack");
+
+
+const prevButton =
+    document.getElementById("prevPage");
+
+const nextButton =
+    document.getElementById("nextPage");
+
+const counter =
+    document.getElementById("counter");
+
+
+
+/* =========================================================
+   ZMIENNE
+========================================================= */
+
+let currentIndex = 0;
+
 let isTurning = false;
 
 
+
 /* =========================================================
-   AKTUALIZACJA NAWIGACJI
+   POMOCNICZA FUNKCJA URL
 ========================================================= */
 
-function updateNavigation() {
+function imageURL(src) {
 
-    prevButton.disabled = currentPage === 0;
-    nextButton.disabled = currentPage === views.length - 1;
-
-    const title = views[currentPage].dataset.title || "";
-
-    if (currentPage >= 2) {
-        pageName.textContent = `Karta ${currentPage - 1} — ???`;
-    } else {
-        pageName.textContent = title;
-    }
+    return `url("${src}")`;
 
 }
 
 
+
 /* =========================================================
-   ZMIANA WIDOKU
+   LICZNIK
 ========================================================= */
 
-function activatePage(index) {
+function updateControls() {
 
-    views.forEach((view) => {
-        view.classList.remove("active");
-    });
+    prevButton.disabled =
+        currentIndex === 0;
 
-    views[index].classList.add("active");
 
-    currentPage = index;
+    nextButton.disabled =
+        currentIndex ===
+        pages.length - 1;
 
-    updateNavigation();
+
+    counter.textContent =
+        `${currentIndex + 1} / ${pages.length}`;
 
 }
 
 
+
 /* =========================================================
-   ANIMACJA DO PRZODU
+   OTWIERANIE OKŁADKI
 ========================================================= */
 
-function turnNext() {
+function openBook() {
 
-    if (isTurning) return;
+    coverView.classList.add(
+        "opening"
+    );
 
-    if (currentPage >= views.length - 1) return;
+
+    /*
+        Pod spodem od razu przygotowujemy
+        "Poznaj nas".
+    */
+
+    currentSpread.src =
+        pages[0];
+
+
+    setTimeout(() => {
+
+        bookView.classList.add(
+            "active"
+        );
+
+    }, 350);
+
+
+    setTimeout(() => {
+
+        coverView.classList.remove(
+            "active",
+            "opening"
+        );
+
+
+        currentIndex = 0;
+
+        updateControls();
+
+    }, 1050);
+
+}
+
+
+
+/* =========================================================
+   PRZEWRÓĆ DO PRZODU
+========================================================= */
+
+function nextPage() {
+
+    if (isTurning)
+        return;
+
+
+    if (
+        currentIndex >=
+        pages.length - 1
+    )
+        return;
+
 
     isTurning = true;
 
-    const nextIndex = currentPage + 1;
 
-    pageTurn.classList.remove("turn-prev");
-    pageTurn.classList.remove("turn-next");
+    const current =
+        pages[currentIndex];
+
+
+    const next =
+        pages[currentIndex + 1];
+
 
     /*
-       Najpierw pokazujemy następną stronę pod przewracaną kartką.
+        POD SPODem =
+        następna pełna rozkładówka
     */
 
-    views[nextIndex].classList.add("active");
+    underSpread.src =
+        next;
+
 
     /*
-       Wymuszamy przeliczenie stylu,
-       żeby animacja zawsze odpaliła od początku.
+        LEWA POŁOWA OBECNEJ
+        zostaje nieruchoma
     */
 
-    void pageTurn.offsetWidth;
-
-    pageTurn.classList.add("turn-next");
+    fixedHalf.style.backgroundImage =
+        imageURL(current);
 
 
     /*
-       W połowie animacji chowamy starą stronę.
+        PRZÓD obracanej strony =
+        prawa połowa obecnej
+    */
+
+    flipFront.style.backgroundImage =
+        imageURL(current);
+
+
+    /*
+        TYŁ obracanej strony =
+        lewa połowa następnej
+    */
+
+    flipBack.style.backgroundImage =
+        imageURL(next);
+
+
+
+    book.classList.remove(
+        "turning-prev"
+    );
+
+
+    book.classList.add(
+        "turning",
+        "turning-next"
+    );
+
+
+
+    /*
+        Po zakończeniu animacji
+        pokazujemy już pełną
+        nową rozkładówkę.
     */
 
     setTimeout(() => {
 
-        views[currentPage].classList.remove("active");
-
-    }, 470);
+        currentIndex++;
 
 
-    /*
-       Po zakończeniu animacji ustawiamy nową stronę
-       jako aktualną.
-    */
+        currentSpread.src =
+            pages[currentIndex];
 
-    setTimeout(() => {
 
-        currentPage = nextIndex;
+        underSpread.src =
+            "";
 
-        pageTurn.classList.remove("turn-next");
 
-        updateNavigation();
+        book.classList.remove(
+            "turning",
+            "turning-next"
+        );
+
+
+        updateControls();
+
 
         isTurning = false;
 
-    }, 980);
+    }, 1120);
 
 }
 
 
+
 /* =========================================================
-   ANIMACJA DO TYŁU
+   PRZEWRÓĆ DO TYŁU
 ========================================================= */
 
-function turnPrev() {
+function previousPage() {
 
-    if (isTurning) return;
+    if (isTurning)
+        return;
 
-    if (currentPage <= 0) return;
+
+    if (currentIndex <= 0)
+        return;
+
 
     isTurning = true;
 
-    const previousIndex = currentPage - 1;
 
-    pageTurn.classList.remove("turn-next");
-    pageTurn.classList.remove("turn-prev");
-
-
-    /*
-       Poprzednia strona pojawia się pod kartką.
-    */
-
-    views[previousIndex].classList.add("active");
+    const current =
+        pages[currentIndex];
 
 
-    void pageTurn.offsetWidth;
-
-    pageTurn.classList.add("turn-prev");
+    const previous =
+        pages[currentIndex - 1];
 
 
     /*
-       W połowie przewracania chowamy obecną stronę.
+        POPRZEDNIA pełna rozkładówka
+        jest pod spodem.
     */
+
+    underSpread.src =
+        previous;
+
+
+    /*
+        PRAWA połowa obecnej
+        pozostaje nieruchoma.
+    */
+
+    fixedHalf.style.backgroundImage =
+        imageURL(current);
+
+
+    /*
+        PRZÓD =
+        lewa połowa obecnej
+    */
+
+    flipFront.style.backgroundImage =
+        imageURL(current);
+
+
+    /*
+        TYŁ =
+        prawa połowa poprzedniej
+    */
+
+    flipBack.style.backgroundImage =
+        imageURL(previous);
+
+
+
+    book.classList.remove(
+        "turning-next"
+    );
+
+
+    book.classList.add(
+        "turning",
+        "turning-prev"
+    );
+
+
 
     setTimeout(() => {
 
-        views[currentPage].classList.remove("active");
-
-    }, 470);
+        currentIndex--;
 
 
-    /*
-       Kończymy animację.
-    */
+        currentSpread.src =
+            pages[currentIndex];
 
-    setTimeout(() => {
 
-        currentPage = previousIndex;
+        underSpread.src =
+            "";
 
-        pageTurn.classList.remove("turn-prev");
 
-        updateNavigation();
+        book.classList.remove(
+            "turning",
+            "turning-prev"
+        );
+
+
+        updateControls();
+
 
         isTurning = false;
 
-    }, 980);
+    }, 1120);
 
 }
 
 
-/* =========================================================
-   OTWARCIE OKŁADKI
-========================================================= */
-
-function openAlbum() {
-
-    if (currentPage !== 0) return;
-
-    turnNext();
-
-}
-
 
 /* =========================================================
-   PRZYCISKI
+   KLIKNIĘCIA
 ========================================================= */
 
-nextButton.addEventListener("click", () => {
-
-    turnNext();
-
-});
-
-
-prevButton.addEventListener("click", () => {
-
-    turnPrev();
-
-});
+openAlbum.addEventListener(
+    "click",
+    openBook
+);
 
 
-openAlbumButton.addEventListener("click", () => {
+nextButton.addEventListener(
+    "click",
+    nextPage
+);
 
-    openAlbum();
 
-});
+prevButton.addEventListener(
+    "click",
+    previousPage
+);
+
 
 
 /* =========================================================
    KLAWIATURA
 ========================================================= */
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    if (event.key === "ArrowRight") {
-        turnNext();
+
+        if (
+            !bookView.classList.contains(
+                "active"
+            )
+        )
+            return;
+
+
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
+
+            nextPage();
+
+        }
+
+
+        if (
+            event.key ===
+            "ArrowLeft"
+        ) {
+
+            previousPage();
+
+        }
+
+
     }
+);
 
-    if (event.key === "ArrowLeft") {
-        turnPrev();
-    }
-
-});
 
 
 /* =========================================================
    START
 ========================================================= */
 
-activatePage(0);
+currentSpread.src =
+    pages[0];
+
+
+updateControls();
