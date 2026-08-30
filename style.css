@@ -11,23 +11,23 @@
 html,
 body {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
 }
 
 body {
     min-height: 100vh;
-
     overflow: hidden;
 
     background:
         radial-gradient(
             ellipse at center,
-            #321a11 0%,
+            #2d170f 0%,
             #170b07 48%,
-            #080302 100%
+            #070302 100%
         );
 
-    color: #dcb36c;
+    color: #d9ad64;
+    font-family: Georgia, "Times New Roman", serif;
 }
 
 
@@ -36,16 +36,16 @@ body {
 ========================================================= */
 
 .album-stage {
+    position: relative;
+
     width: 100vw;
     height: 100vh;
-
-    position: relative;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    perspective: 2500px;
+    perspective: 2400px;
 }
 
 
@@ -55,86 +55,76 @@ body {
 
 .cover-screen {
     position: absolute;
-
     inset: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 25px;
+    padding: 20px;
 
     opacity: 0;
     visibility: hidden;
-
     pointer-events: none;
 
     transition:
-        opacity .5s ease,
-        visibility .5s ease;
+        opacity .45s ease,
+        visibility .45s ease;
 }
 
 .cover-screen.active {
     opacity: 1;
     visibility: visible;
-
     pointer-events: auto;
 }
 
-
 .cover-button {
     height: 92vh;
+    max-width: 95vw;
 
-    max-width: 94vw;
-
-    border: 0;
-
+    border: none;
+    padding: 0;
     background: transparent;
 
     cursor: pointer;
 
-    padding: 0;
-
     transform-origin: left center;
-
-    transition:
-        transform .35s ease,
-        filter .35s ease;
 
     filter:
         drop-shadow(
-            0 28px 35px rgba(0,0,0,.8)
+            0 28px 38px rgba(0,0,0,.78)
         );
-}
 
+    transition:
+        transform .3s ease,
+        filter .3s ease;
+}
 
 .cover-button:hover {
     transform:
-        translateY(-5px)
+        translateY(-4px)
         scale(1.01);
 
     filter:
-        brightness(1.06)
+        brightness(1.05)
         drop-shadow(
-            0 35px 40px rgba(0,0,0,.85)
+            0 32px 42px rgba(0,0,0,.82)
         );
 }
 
-
 .cover-button img {
+    display: block;
+
     height: 100%;
     width: auto;
 
-    max-width: 94vw;
+    max-width: 95vw;
 
     object-fit: contain;
-
-    display: block;
 
     border-radius: 10px;
 
     user-select: none;
-
     -webkit-user-drag: none;
 }
 
@@ -145,34 +135,30 @@ body {
 
 .cover-screen.opening .cover-button {
     animation:
-        openingCover
+        openCover
         .9s
-        cubic-bezier(.4,.05,.2,1)
+        cubic-bezier(.42,.05,.2,1)
         forwards;
 }
 
-
-@keyframes openingCover {
+@keyframes openCover {
 
     0% {
         transform:
-            perspective(1800px)
             rotateY(0deg);
 
         opacity: 1;
     }
 
-    60% {
+    55% {
         transform:
-            perspective(1800px)
-            rotateY(-110deg);
+            rotateY(-105deg);
 
-        opacity: .75;
+        opacity: .82;
     }
 
     100% {
         transform:
-            perspective(1800px)
             rotateY(-165deg);
 
         opacity: 0;
@@ -181,12 +167,11 @@ body {
 
 
 /* =========================================================
-   EKRAN ALBUMU
+   OTWARTY ALBUM
 ========================================================= */
 
 .album-screen {
     position: absolute;
-
     inset: 0;
 
     display: flex;
@@ -196,57 +181,51 @@ body {
     justify-content: center;
 
     padding:
-        18px
-        18px
-        85px;
+        14px
+        14px
+        82px;
 
     opacity: 0;
-
     visibility: hidden;
-
     pointer-events: none;
 
     transition:
-        opacity .4s ease;
+        opacity .35s ease;
 }
-
 
 .album-screen.active {
     opacity: 1;
-
     visibility: visible;
-
     pointer-events: auto;
 }
 
 
 /* =========================================================
-   RAMA KSIĄŻKI
+   OBSZAR KSIĄŻKI
 ========================================================= */
 
 .book-shell {
     width: min(96vw, 1550px);
 
-    height: calc(100vh - 120px);
+    height:
+        calc(100vh - 115px);
 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-
 .book {
     position: relative;
+
+    width: 100%;
+    height: 100%;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 100%;
-    height: 100%;
-
     perspective: 2400px;
-
     transform-style: preserve-3d;
 }
 
@@ -266,33 +245,28 @@ body {
 
     object-fit: contain;
 
-    user-select: none;
-
-    -webkit-user-drag: none;
-
     border-radius: 12px;
 
     box-shadow:
-        0 30px 60px rgba(0,0,0,.72);
+        0 30px 65px rgba(0,0,0,.72);
+
+    user-select: none;
+    -webkit-user-drag: none;
 
     transition:
-        opacity .18s ease,
-        transform .35s ease,
-        filter .35s ease;
+        opacity .2s ease,
+        transform .28s ease,
+        filter .28s ease;
 }
-
-
-/* delikatny ruch przy zmianie */
 
 .book.switching .page-image {
     transform: scale(.995);
-
-    filter: brightness(.88);
+    filter: brightness(.9);
 }
 
 
 /* =========================================================
-   GRZBIET
+   GRZBIET KSIĄŻKI
 ========================================================= */
 
 .spine {
@@ -305,24 +279,25 @@ body {
 
     width: 2px;
 
-    transform: translateX(-50%);
-
-    pointer-events: none;
+    transform:
+        translateX(-50%);
 
     background:
         linear-gradient(
             to bottom,
             transparent,
-            rgba(10,4,2,.5) 10%,
+            rgba(20,8,4,.42) 10%,
             rgba(0,0,0,.72) 50%,
-            rgba(10,4,2,.5) 90%,
+            rgba(20,8,4,.42) 90%,
             transparent
         );
 
     box-shadow:
-        0 0 20px rgba(0,0,0,.55);
+        0 0 18px rgba(0,0,0,.48);
 
-    opacity: .7;
+    opacity: .68;
+
+    pointer-events: none;
 }
 
 
@@ -339,12 +314,11 @@ body {
     width: 50%;
     height: 92%;
 
-    pointer-events: none;
-
     opacity: 0;
 
-    transform-origin: left center;
+    pointer-events: none;
 
+    transform-origin: left center;
     transform-style: preserve-3d;
 
     border-radius:
@@ -353,56 +327,46 @@ body {
     background:
         linear-gradient(
             90deg,
-            rgba(135,93,51,.2),
-            rgba(232,201,146,.18) 18%,
-            rgba(255,242,203,.13) 65%,
-            rgba(88,48,23,.18)
+            rgba(86,53,28,.16),
+            rgba(213,177,119,.15) 20%,
+            rgba(250,226,180,.10) 65%,
+            rgba(60,32,16,.15)
         );
-
-    backdrop-filter: brightness(.98);
 
     z-index: 20;
 }
-
 
 .turn-sheet.turn-next {
     opacity: 1;
 
     animation:
-        pageNext
+        nextPageTurn
         .72s
-        cubic-bezier(.45,.02,.2,1)
+        cubic-bezier(.44,.04,.18,1)
         forwards;
 }
 
-
-@keyframes pageNext {
+@keyframes nextPageTurn {
 
     0% {
         transform:
-            rotateY(0deg)
-            skewY(0deg);
+            rotateY(0deg);
 
         box-shadow:
-            -4px 0 5px rgba(0,0,0,.15);
+            -3px 0 6px rgba(0,0,0,.12);
     }
 
-    40% {
+    45% {
         transform:
-            rotateY(-70deg)
-            skewY(-1deg);
+            rotateY(-88deg);
 
         box-shadow:
-            -20px 6px 28px rgba(0,0,0,.5);
+            -24px 8px 28px rgba(0,0,0,.48);
     }
 
-    70% {
+    75% {
         transform:
-            rotateY(-125deg)
-            skewY(1deg);
-
-        box-shadow:
-            16px 5px 25px rgba(0,0,0,.45);
+            rotateY(-140deg);
     }
 
     100% {
@@ -414,7 +378,9 @@ body {
 }
 
 
-/* cofanie */
+/* =========================================================
+   COFANIE
+========================================================= */
 
 .turn-sheet.turn-prev {
     left: 0;
@@ -422,37 +388,36 @@ body {
 
     transform-origin: right center;
 
-    opacity: 1;
-
     border-radius:
         12px 0 0 12px;
 
+    opacity: 1;
+
     animation:
-        pagePrev
+        prevPageTurn
         .72s
-        cubic-bezier(.45,.02,.2,1)
+        cubic-bezier(.44,.04,.18,1)
         forwards;
 }
 
-
-@keyframes pagePrev {
+@keyframes prevPageTurn {
 
     0% {
         transform:
             rotateY(0deg);
     }
 
-    40% {
+    45% {
         transform:
-            rotateY(70deg);
+            rotateY(88deg);
 
         box-shadow:
-            20px 6px 28px rgba(0,0,0,.5);
+            24px 8px 28px rgba(0,0,0,.48);
     }
 
-    70% {
+    75% {
         transform:
-            rotateY(125deg);
+            rotateY(140deg);
     }
 
     100% {
@@ -464,22 +429,23 @@ body {
 }
 
 
-/* cień obracanej strony */
+/* =========================================================
+   CIEŃ KARTKI
+========================================================= */
 
 .turn-shadow {
     position: absolute;
-
     inset: 0;
+
+    border-radius: inherit;
 
     background:
         linear-gradient(
             to left,
-            rgba(0,0,0,.18),
-            transparent 42%,
-            rgba(0,0,0,.3)
+            rgba(0,0,0,.22),
+            transparent 45%,
+            rgba(0,0,0,.26)
         );
-
-    border-radius: inherit;
 }
 
 
@@ -493,7 +459,8 @@ body {
     left: 50%;
     bottom: 15px;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
     display: flex;
     align-items: center;
@@ -502,24 +469,25 @@ body {
 
     padding:
         8px
-        15px;
+        14px;
 
-    border-radius: 999px;
+    border-radius:
+        999px;
 
     border:
-        1px solid rgba(198,140,58,.5);
+        1px solid rgba(198,137,52,.52);
 
     background:
-        rgba(19,7,4,.95);
+        rgba(18,7,4,.95);
 
     box-shadow:
-        0 8px 25px rgba(0,0,0,.58);
+        0 8px 24px rgba(0,0,0,.58);
 
-    backdrop-filter: blur(7px);
+    backdrop-filter:
+        blur(7px);
 
     z-index: 100;
 }
-
 
 .navigation button {
     width: 52px;
@@ -528,96 +496,84 @@ body {
     border-radius: 50%;
 
     border:
-        2px solid #93602d;
+        2px solid #93602f;
 
     background:
         radial-gradient(
-            circle at 35% 28%,
-            #8c3441,
+            circle at 35% 30%,
+            #8d3543,
             #5c1821 62%,
             #30090e
         );
 
-    color: #e4b764;
-
-    font-family:
-        Georgia,
-        serif;
+    color: #e4b769;
 
     font-size: 27px;
+    font-family: Georgia, serif;
 
     cursor: pointer;
 
     box-shadow:
-        inset 0 0 0 3px rgba(58,12,16,.55),
-        0 5px 12px rgba(0,0,0,.43);
+        inset 0 0 0 3px rgba(57,12,16,.55),
+        0 5px 12px rgba(0,0,0,.42);
 
     transition:
-        transform .18s ease,
-        filter .18s ease,
-        opacity .18s ease;
+        transform .17s ease,
+        filter .17s ease,
+        opacity .17s ease;
 }
-
 
 .navigation button:hover:not(:disabled) {
     transform: scale(1.09);
-
     filter: brightness(1.18);
 }
 
-
 .navigation button:disabled {
     opacity: .24;
-
     cursor: default;
 }
 
 
+/* =========================================================
+   LICZNIK
+========================================================= */
+
 #pageCounter {
-    min-width: 85px;
+    min-width: 86px;
 
     text-align: center;
 
-    color: #d6aa60;
-
-    font-family:
-        Georgia,
-        serif;
+    color: #d4a85e;
 
     font-size: 15px;
-
     letter-spacing: 2px;
 }
 
 
 /* =========================================================
-   RESPONSYWNOŚĆ
+   TELEFON / MNIEJSZY EKRAN
 ========================================================= */
 
 @media (max-width: 850px) {
+
+    .album-screen {
+        padding:
+            6px
+            5px
+            74px;
+    }
 
     .book-shell {
         width: 99vw;
 
         height:
-            calc(100vh - 105px);
+            calc(100vh - 100px);
     }
-
-
-    .album-screen {
-        padding:
-            7px
-            5px
-            78px;
-    }
-
 
     .navigation {
-        bottom: 9px;
-
+        bottom: 8px;
         gap: 10px;
     }
-
 
     .navigation button {
         width: 44px;
@@ -626,10 +582,8 @@ body {
         font-size: 22px;
     }
 
-
     #pageCounter {
         min-width: 68px;
-
         font-size: 12px;
     }
 
